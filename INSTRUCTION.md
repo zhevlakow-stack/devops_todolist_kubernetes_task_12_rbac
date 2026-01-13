@@ -25,7 +25,7 @@ POD_NAME=$(kubectl get pods -n todoapp -l app=todoapp -o jsonpath="{.items[0].me
 2. Execute Curl Command: Run this command to use the internal ServiceAccount token to call the K8s API:
 
 ```bash
-kubectl exec -it $POD_NAME -n todoapp -- sh -c 'curl -k -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" [https://kubernetes.default.svc/api/v1/namespaces/todoapp/secrets](https://kubernetes.default.svc/api/v1/namespaces/todoapp/secrets)'
+kubectl exec $POD_NAME -n todoapp -- sh -c 'curl -k -s -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" https://kubernetes.default.svc/api/v1/namespaces/todoapp/secrets'
 ```
 Expected Output: You should see a JSON response containing a list of secrets (like todoapp-db-secret, default-token-xxxxx, etc.).
 
